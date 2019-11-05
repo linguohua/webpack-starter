@@ -2,7 +2,25 @@ import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 
 const container = document.getElementById('xterm-container');
-const ws = new WebSocket("ws://localhost:8010/xportweb");
+const host = window.location.host;
+const pathname = window.location.pathname;
+const protocol = window.location.protocol;
+let wspotocol = "ws://";
+if (protocol.indexOf("https") >= 0) {
+    wspotocol = "wss://";
+}
+
+let wsurl = wspotocol + host + pathname;
+if (wsurl.charAt(wsurl.length - 1) == "/") {
+    wsurl = wsurl + "ws";
+} else {
+    wsurl = wsurl + "/ws";
+}
+
+console.log("connect to websocket address:", wsurl);
+
+const ws = new WebSocket(wsurl);
+
 const options = {
     cursorStyle: "underline",
     cursorBlink: true,
@@ -19,6 +37,10 @@ fitAddon.fit();
 window.onresize = () => {
     fitAddon.fit();
 };
+
+term.onTitleChange((t) => {
+    document.title = t;
+});
 
 function wsSend(str) {
     if (ws.readyState !== WebSocket.OPEN) {

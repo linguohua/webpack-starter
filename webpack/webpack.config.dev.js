@@ -11,7 +11,15 @@ module.exports = merge(common, {
     publicPath: ''
   },
   devServer: {
-    inline: true
+    // transportMode: 'ws',
+    inline: true,
+    proxy: {
+      '/ws': {
+        target: 'ws://localhost:8010/',
+        ws: true,
+        logLevel: 'debug' // this what you want
+      },
+    }
   },
   plugins: [
     new Webpack.DefinePlugin({
