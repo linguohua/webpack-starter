@@ -1,6 +1,10 @@
-$body-color: slateblue;
-
 body {
-  color: $body-color;
   font-family: sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
 }

@@ -10,7 +10,8 @@ module.exports = merge(common, {
   bail: true,
   output: {
     filename: 'js/[name].[chunkhash:8].js',
-    chunkFilename: 'js/[name].[chunkhash:8].chunk.js'
+    chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
+    publicPath: ''
   },
   plugins: [
     new Webpack.DefinePlugin({
@@ -30,7 +31,7 @@ module.exports = merge(common, {
       },
       {
         test: /\.s?css/i,
-        use : [
+        use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
           'sass-loader'
